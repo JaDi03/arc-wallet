@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
-const webAppUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://your-vercel-app.vercel.app';
+const webAppUrl = 'https://arc-wallet.vercel.app/';
 
 if (!token) {
     console.error("TELEGRAM_BOT_TOKEN is missing in .env");
