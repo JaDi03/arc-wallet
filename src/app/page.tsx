@@ -164,7 +164,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-b from-[#1c1c1e] via-transparent to-[#1c1c1e] z-10 pointer-events-none"></div>
 
                     <div className="w-full h-full min-h-[192px]">
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                             <AreaChart data={CHART_DATA}>
                                 <defs>
                                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
