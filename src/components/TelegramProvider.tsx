@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// Define the interface for the Telegram WebApp
 interface TelegramWebApp {
     initData: string;
     initDataUnsafe: any;
@@ -47,29 +46,39 @@ export function TelegramProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<TelegramUser | null>(null);
 
     useEffect(() => {
-        const app = (window as any).Telegram?.WebApp;
-        if (app) {
-            app.ready();
-            app.expand(); // Always expand to full height
-
-            // Log for debugging
-            console.log("Telegram WebApp Initialized:", app);
-
-            setWebApp(app);
-            setIsReady(true);
-
-            if (app.initDataUnsafe?.user) {
-                setUser(app.initDataUnsafe.user as TelegramUser);
+        const initWebApp = () => {
+            const app = (window as any).Telegram?.WebApp;
+            if (app) {
+                app.ready();
+                app.expand();
+                console.log("Telegram SDK Loaded and Ready");
+                setWebApp(app);
+                setIsReady(true);
+                if (app.initDataUnsafe?.user) {
+                    setUser(app.initDataUnsafe.user as TelegramUser);
+                }
+                // Sync Theme
+                document.documentElement.setAttribute('data-theme', app.colorScheme);
             }
+        };
 
-            // Sync Theme
-            document.documentElement.setAttribute('data-theme', app.colorScheme);
+        if ((window as any).Telegram?.WebApp) {
+            initWebApp();
+        } else {
+            // Polling fallback in case of delayed script execution
+            const interval = setInterval(() => {
+                const app = (window as any).Telegram?.WebApp;
+                if (app) {
+                    initWebApp();
+                    clearInterval(interval);
+                }
+            }, 100);
+            return () => clearInterval(interval);
         }
     }, []);
 
     return (
         <TelegramContext.Provider value={{ webApp, user, isReady }}>
-            <script src="https://telegram.org/js/telegram-web-app.js" async />
             {children}
         </TelegramContext.Provider>
     );
