@@ -163,101 +163,102 @@ export default function Home() {
                     {/* Gradient Overlay for "Premium" feel */}
                     <div className="absolute inset-0 bg-gradient-to-b from-[#1c1c1e] via-transparent to-[#1c1c1e] z-10 pointer-events-none"></div>
 
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={CHART_DATA}>
-                            <defs>
-                                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <Tooltip cursor={false} contentStyle={{ backgroundColor: '#2c2c2e', borderRadius: '12px', borderColor: '#3a3a3c' }} itemStyle={{ color: '#fff' }} />
-                            <Area type="monotone" dataKey="value" stroke="#6366f1" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    <div className="w-full h-full min-h-[192px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={CHART_DATA}>
+                                <defs>
+                                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <Tooltip cursor={false} contentStyle={{ backgroundColor: '#2c2c2e', borderRadius: '12px', borderColor: '#3a3a3c' }} itemStyle={{ color: '#fff' }} />
+                                <Area type="monotone" dataKey="value" stroke="#6366f1" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
+                            </AreaChart>
+                        </ResponsiveContainer>
 
-                    {/* Centered Total Balance Overlay */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-                        <span className="text-gray-400 text-xs font-medium uppercase tracking-widest mb-1">Total Balance</span>
-                        <h2 className="text-4xl font-black text-white tracking-tight drop-shadow-2xl">
-                            ${totalBalance}
-                        </h2>
-                        <span className="text-emerald-400 text-xs font-medium bg-emerald-400/10 px-2 py-0.5 rounded mt-1 flex items-center gap-1">
-                            <TrendingUp className="w-3 h-3" />
-                            +2.45% Today
-                        </span>
-                    </div>
-                </div>
-
-                {/* --- Quick Actions --- */}
-                <div className="grid grid-cols-4 gap-4 px-6 mt-6">
-                    {[
-                        { icon: Send, label: 'Transfer', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
-                        { icon: Plus, label: 'Top Up', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
-                        { icon: ArrowUpRight, label: 'Withdraw', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
-                        { icon: ArrowRightLeft, label: 'Swap', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
-                    ].map((action, i) => (
-                        <div key={i} className="flex flex-col items-center gap-2 group">
-                            <div className={`w-14 h-14 rounded-2xl ${action.bg} flex items-center justify-center group-hover:bg-[#3a3a3c] active:scale-95 transition-all cursor-pointer shadow-lg shadow-black/20 border border-white/5`}>
-                                <action.icon className={`w-6 h-6 ${action.color}`} />
-                            </div>
-                            <span className="text-[10px] text-gray-400 font-medium group-hover:text-indigo-400 transition-colors">{action.label}</span>
-                        </div>
-                    ))}
-                </div>
-
-                {/* --- Ad Banner --- */}
-                <div className="px-4 mt-8">
-                    <div className="relative rounded-2xl overflow-hidden h-28 bg-gradient-to-r from-indigo-900 to-purple-900 flex items-center justify-between px-5 shadow-xl border border-white/10 group cursor-pointer">
-                        <div className="relative z-10 max-w-[70%]">
-                            <div className="flex items-center gap-1 mb-1">
-                                <Sparkles className="w-3 h-3 text-yellow-400" />
-                                <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">Agent Opportunity</span>
-                            </div>
-                            <h3 className="text-white font-bold text-lg leading-tight">Automate your yields with Arc AI</h3>
-                            <button
-                                onClick={() => router.push('/invest')}
-                                className="mt-3 bg-white text-indigo-900 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
-                            >
-                                Activate Now
-                            </button>
-                        </div>
-                        {/* 3D Elements Placeholder */}
-                        <div className="relative z-10 transform rotate-12 group-hover:rotate-6 transition-transform duration-500">
-                            <Coins className="w-16 h-16 text-indigo-400 opacity-80" />
+                        {/* Centered Total Balance Overlay */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
+                            <span className="text-gray-400 text-xs font-medium uppercase tracking-widest mb-1">Total Balance</span>
+                            <h2 className="text-4xl font-black text-white tracking-tight drop-shadow-2xl">
+                                ${totalBalance}
+                            </h2>
+                            <span className="text-emerald-400 text-xs font-medium bg-emerald-400/10 px-2 py-0.5 rounded mt-1 flex items-center gap-1">
+                                <TrendingUp className="w-3 h-3" />
+                                +2.45% Today
+                            </span>
                         </div>
                     </div>
-                </div>
 
-                {/* --- Asset List (Updated Labels) --- */}
-                <div className="mt-8">
-                    <div className="px-4 py-2 flex items-center justify-between">
-                        <span className="text-sm font-bold text-white">Your Assets</span>
-                        <Settings className="w-4 h-4 text-gray-500" />
-                    </div>
-
-                    <div className="space-y-2 px-2">
-                        {MOCK_ASSETS.map((asset, i) => (
-                            <div key={i} className="px-4 py-3 bg-[#2c2c2e]/50 rounded-xl flex items-center justify-between hover:bg-[#2c2c2e] transition-colors border border-transparent hover:border-white/5 cursor-pointer">
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md ${asset.color}`}>
-                                        {asset.symbol[0]}
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-white text-sm">{asset.name}</h3>
-                                        <div className="flex items-center gap-1 text-xs text-gray-400">
-                                            <span>{asset.symbol}</span>
-                                        </div>
-                                    </div>
+                    {/* --- Quick Actions --- */}
+                    <div className="grid grid-cols-4 gap-4 px-6 mt-6">
+                        {[
+                            { icon: Send, label: 'Transfer', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
+                            { icon: Plus, label: 'Top Up', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
+                            { icon: ArrowUpRight, label: 'Withdraw', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
+                            { icon: ArrowRightLeft, label: 'Swap', color: 'text-indigo-400', bg: 'bg-[#2c2c2e]' },
+                        ].map((action, i) => (
+                            <div key={i} className="flex flex-col items-center gap-2 group">
+                                <div className={`w-14 h-14 rounded-2xl ${action.bg} flex items-center justify-center group-hover:bg-[#3a3a3c] active:scale-95 transition-all cursor-pointer shadow-lg shadow-black/20 border border-white/5`}>
+                                    <action.icon className={`w-6 h-6 ${action.color}`} />
                                 </div>
-                                <div className="text-right">
-                                    <h3 className="font-semibold text-white text-sm">{asset.value}</h3>
-                                    <p className="text-xs text-gray-500">Balance</p>
-                                </div>
+                                <span className="text-[10px] text-gray-400 font-medium group-hover:text-indigo-400 transition-colors">{action.label}</span>
                             </div>
                         ))}
                     </div>
-                </div>
+
+                    {/* --- Ad Banner --- */}
+                    <div className="px-4 mt-8">
+                        <div className="relative rounded-2xl overflow-hidden h-28 bg-gradient-to-r from-indigo-900 to-purple-900 flex items-center justify-between px-5 shadow-xl border border-white/10 group cursor-pointer">
+                            <div className="relative z-10 max-w-[70%]">
+                                <div className="flex items-center gap-1 mb-1">
+                                    <Sparkles className="w-3 h-3 text-yellow-400" />
+                                    <span className="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">Agent Opportunity</span>
+                                </div>
+                                <h3 className="text-white font-bold text-lg leading-tight">Automate your yields with Arc AI</h3>
+                                <button
+                                    onClick={() => router.push('/invest')}
+                                    className="mt-3 bg-white text-indigo-900 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+                                >
+                                    Activate Now
+                                </button>
+                            </div>
+                            {/* 3D Elements Placeholder */}
+                            <div className="relative z-10 transform rotate-12 group-hover:rotate-6 transition-transform duration-500">
+                                <Coins className="w-16 h-16 text-indigo-400 opacity-80" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* --- Asset List (Updated Labels) --- */}
+                    <div className="mt-8">
+                        <div className="px-4 py-2 flex items-center justify-between">
+                            <span className="text-sm font-bold text-white">Your Assets</span>
+                            <Settings className="w-4 h-4 text-gray-500" />
+                        </div>
+
+                        <div className="space-y-2 px-2">
+                            {MOCK_ASSETS.map((asset, i) => (
+                                <div key={i} className="px-4 py-3 bg-[#2c2c2e]/50 rounded-xl flex items-center justify-between hover:bg-[#2c2c2e] transition-colors border border-transparent hover:border-white/5 cursor-pointer">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md ${asset.color}`}>
+                                            {asset.symbol[0]}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-white text-sm">{asset.name}</h3>
+                                            <div className="flex items-center gap-1 text-xs text-gray-400">
+                                                <span>{asset.symbol}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <h3 className="font-semibold text-white text-sm">{asset.value}</h3>
+                                        <p className="text-xs text-gray-500">Balance</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
             </main>
 
