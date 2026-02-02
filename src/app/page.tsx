@@ -133,13 +133,19 @@ export default function Home() {
                             </div>
                         )}
                     </div>
-                    {/* Title */}
+                    {/* Title & Address */}
                     <div className="flex flex-col">
                         <div className="flex items-center gap-1">
                             <span className="text-base font-bold tracking-wide">Arc Wallet</span>
                             <ShieldCheck className="w-3.5 h-3.5 text-indigo-400 fill-indigo-400/20" />
                         </div>
-                        <span className="text-[10px] text-gray-400 -mt-0.5">Agentic Vault</span>
+                        {wallet?.address ? (
+                            <span className="text-[10px] text-indigo-400 font-mono">
+                                {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
+                            </span>
+                        ) : (
+                            <span className="text-[10px] text-gray-400 -mt-0.5">Agentic Vault</span>
+                        )}
                     </div>
                 </div>
 
@@ -239,25 +245,32 @@ export default function Home() {
                     </div>
 
                     <div className="space-y-2 px-2">
-                        {MOCK_ASSETS.map((asset, i) => (
-                            <div key={i} className="px-4 py-3 bg-[#2c2c2e]/50 rounded-xl flex items-center justify-between hover:bg-[#2c2c2e] transition-colors border border-transparent hover:border-white/5 cursor-pointer">
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md ${asset.color}`}>
-                                        {asset.symbol[0]}
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-white text-sm">{asset.name}</h3>
-                                        <div className="flex items-center gap-1 text-xs text-gray-400">
-                                            <span>{asset.symbol}</span>
+                        {balances.length > 0 ? (
+                            balances.map((balance, i) => (
+                                <div key={i} className="px-4 py-3 bg-[#2c2c2e]/50 rounded-xl flex items-center justify-between hover:bg-[#2c2c2e] transition-colors border border-white/5 cursor-pointer">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm bg-indigo-500 shadow-md`}>
+                                            {balance.token.symbol[0]}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-white text-sm">{balance.token.name}</h3>
+                                            <div className="flex items-center gap-1 text-xs text-gray-400">
+                                                <span>{balance.token.symbol}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="text-right">
+                                        <h3 className="font-semibold text-white text-sm">{balance.amount}</h3>
+                                        <p className="text-xs text-gray-500">Available</p>
+                                    </div>
                                 </div>
-                                <div className="text-right">
-                                    <h3 className="font-semibold text-white text-sm">{asset.value}</h3>
-                                    <p className="text-xs text-gray-500">Balance</p>
-                                </div>
+                            ))
+                        ) : (
+                            <div className="px-4 py-8 text-center bg-[#2c2c2e]/30 rounded-xl border border-dashed border-white/10">
+                                <p className="text-xs text-gray-500 mb-1">No assets found</p>
+                                <p className="text-[10px] text-gray-600">Fund your wallet to start investing</p>
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
 
